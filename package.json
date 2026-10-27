@@ -1,0 +1,15 @@
+{
+  "name": "glossquote-labs-order-picklist",
+  "version": "0.1.0-m1-r01",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build.mjs",
+    "build:release": "node scripts/release.mjs build",
+    "check:release": "node scripts/release.mjs check",
+    "dev": "node scripts/serve.mjs"
+  }
+}

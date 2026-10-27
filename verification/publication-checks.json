@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Standalone publication copy offline closure and deterministic release reproduction",
+  "commands": [
+    {
+      "command": "node --test test/release.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/check.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/release.mjs build",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/release.mjs check",
+      "exitCode": 0
+    }
+  ],
+  "releaseTests": 21,
+  "releasePassed": 21,
+  "unchangedProductCoreTests": "REUSED_BY_BYTE_IDENTITY_AND_PRIMARY_EVIDENCE",
+  "browserRunByThisPhase": false,
+  "sourceSetSha256": "9f1f1f454e44dac3e00d0ed1be9e8093c84027add7acc9ff4d176636cd643749",
+  "releaseArtifactSha256": "269e622f3ff4184b226b5a1605c9d5e9e833ef10e4e79bfe38a411c9e88d7bba",
+  "rebuiltReleaseManifestMatchesFixedBytes": true,
+  "previewNoindexPreserved": true,
+  "githubSourcePublicationIsSeparateFromDeployment": true,
+  "hosting": "NOT_DEPLOYED",
+  "externalReview": "PENDING"
+}

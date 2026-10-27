@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "tool": "order-picklist",
+  "totals": [
+    {
+      "sku": "BR44_NEW_SKU",
+      "name": "替代品",
+      "quantity": 4,
+      "orderCount": 1,
+      "checked": false
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "BR44_NEW_ORDER",
+      "items": [
+        {
+          "sku": "BR44_NEW_SKU",
+          "name": "替代品",
+          "quantity": 4,
+          "checked": false
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sourceRows": 1,
+    "skuCount": 1,
+    "orderCount": 1
+  }
+}

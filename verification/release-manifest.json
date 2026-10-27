@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "mode": "release-candidate",
+  "origin": "https://picklist.glossquote.com",
+  "toolSlug": "order-picklist",
+  "files": [
+    {
+      "path": "_headers",
+      "bytes": 340,
+      "sha256": "0c38f4c9da5b32baaf3d67661edbdafd5bc4f718a5c772922855a89e4c172112"
+    },
+    {
+      "path": "en/index.html",
+      "bytes": 8762,
+      "sha256": "6e81929c9a7e9fa91df385fcebc9b72eda9bb9a196e742f44765ca6e41ab3f62"
+    },
+    {
+      "path": "index.html",
+      "bytes": 8312,
+      "sha256": "40286e952b00a8e45972a359684353d62bc903832bc04d501325e8662ace3248"
+    },
+    {
+      "path": "js/app.js",
+      "bytes": 8992,
+      "sha256": "a2ab1f45b1eb2590e4451dc78a258527851d87576afb0f2d39c4e819b66e3fa5"
+    },
+    {
+      "path": "js/copy.mjs",
+      "bytes": 7962,
+      "sha256": "8f1a31d297d701b3268420ba426ab75d35a5f519d7377796867247471d2efe4f"
+    },
+    {
+      "path": "js/core/csv.mjs",
+      "bytes": 2812,
+      "sha256": "ecba4c5445a2f8836fc08a7177236fd11b35a5776420812e5018df0ad2bd5bb7"
+    },
+    {
+      "path": "js/core/errors.mjs",
+      "bytes": 650,
+      "sha256": "c580912643f577bbf1c10ad18efa489fe8ae191b925d4556a91d176a099a6426"
+    },
+    {
+      "path": "js/core/export.mjs",
+      "bytes": 2890,
+      "sha256": "6401aede88a323393d544e73e8e90a65824b142b800acdda8ad90116637ae1b8"
+    },
+    {
+      "path": "js/core/orders.mjs",
+      "bytes": 4355,
+      "sha256": "5208fd8643d47dbadc82f11dbb97ad00a94f35e4a0e7c85c09e75b2644e43ba6"
+    },
+    {
+      "path": "js/core/session.mjs",
+      "bytes": 5127,
+      "sha256": "b9a855991d88e9ada1ebf2ef3f0ff3ecb6c1c70ac3b36142f314724b65bfe417"
+    },
+    {
+      "path": "js/view.mjs",
+      "bytes": 4221,
+      "sha256": "49f59a31fdc5215237f6c3bc8d9dfbfbd69da2af474748a22bb6b678f0485503"
+    },
+    {
+      "path": "robots.txt",
+      "bytes": 76,
+      "sha256": "bc64215a365e4915c8a10fd1fb12ef5dbd2b79e28419d4716dfd32595628fc04"
+    },
+    {
+      "path": "sitemap.xml",
+      "bytes": 247,
+      "sha256": "668fda65807f8df9dda93b2923ef520d872830ff45c4a61798a3bf3aeafe70a6"
+    },
+    {
+      "path": "styles/app.css",
+      "bytes": 10421,
+      "sha256": "d22203d2191dd658916accca60ed3e40cf4e53a10134e74e4c16640d15d4fbe9"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "_headers",
+      "bytes": 344,
+      "sha256": "e15cd50c4cb61192cac4ec7b08b0f53e4cf53414b269c831bd71e6c96f643223"
+    },
+    {
+      "path": "en/index.html",
+      "bytes": 8456,
+      "sha256": "6d4e791ac7e9755f94d2b8014cdfb4cb62d32d80bb4d7eaf64f76970141e0faa"
+    },
+    {
+      "path": "index.html",
+      "bytes": 8009,
+      "sha256": "40c20f6dc36ceb8d86e2651e75cb5e166e3eb034e41ab3dc9bd8df259ea9e9b5"
+    },
+    {
+      "path": "js/app.js",
+      "bytes": 8992,
+      "sha256": "a2ab1f45b1eb2590e4451dc78a258527851d87576afb0f2d39c4e819b66e3fa5"
+    },
+    {
+      "path": "js/copy.mjs",
+      "bytes": 7962,
+      "sha256": "8f1a31d297d701b3268420ba426ab75d35a5f519d7377796867247471d2efe4f"
+    },
+    {
+      "path": "js/core/csv.mjs",
+      "bytes": 2812,
+      "sha256": "ecba4c5445a2f8836fc08a7177236fd11b35a5776420812e5018df0ad2bd5bb7"
+    },
+    {
+      "path": "js/core/errors.mjs",
+      "bytes": 650,
+      "sha256": "c580912643f577bbf1c10ad18efa489fe8ae191b925d4556a91d176a099a6426"
+    },
+    {
+      "path": "js/core/export.mjs",
+      "bytes": 2890,
+      "sha256": "6401aede88a323393d544e73e8e90a65824b142b800acdda8ad90116637ae1b8"
+    },
+    {
+      "path": "js/core/orders.mjs",
+      "bytes": 4355,
+      "sha256": "5208fd8643d47dbadc82f11dbb97ad00a94f35e4a0e7c85c09e75b2644e43ba6"
+    },
+    {
+      "path": "js/core/session.mjs",
+      "bytes": 5127,
+      "sha256": "b9a855991d88e9ada1ebf2ef3f0ff3ecb6c1c70ac3b36142f314724b65bfe417"
+    },
+    {
+      "path": "js/view.mjs",
+      "bytes": 4221,
+      "sha256": "49f59a31fdc5215237f6c3bc8d9dfbfbd69da2af474748a22bb6b678f0485503"
+    },
+    {
+      "path": "robots.txt",
+      "bytes": 26,
+      "sha256": "331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1"
+    },
+    {
+      "path": "styles/app.css",
+      "bytes": 10421,
+      "sha256": "d22203d2191dd658916accca60ed3e40cf4e53a10134e74e4c16640d15d4fbe9"
+    }
+  ]
+}

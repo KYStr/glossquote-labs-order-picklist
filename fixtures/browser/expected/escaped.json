@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "tool": "order-picklist",
+  "totals": [
+    {
+      "sku": "A\t\"\\",
+      "name": "Pen\r\n\t\"\\",
+      "quantity": 1,
+      "orderCount": 1,
+      "checked": false
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "O1\n\"\\",
+      "items": [
+        {
+          "sku": "A\t\"\\",
+          "name": "Pen\r\n\t\"\\",
+          "quantity": 1,
+          "checked": false
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sourceRows": 1,
+    "skuCount": 1,
+    "orderCount": 1
+  }
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Turn a local order-lines CSV into a consolidated SKU pick sheet and per-order packing lists, with exact IDs and conflict checks.">
+  <title>Order Pick List and Packing Lists | Group by SKU</title>
+  <link rel="alternate" hreflang="zh-Hant" href="../index.html">
+  <link rel="stylesheet" href="../styles/app.css">
+  <script type="module" src="../js/app.js"></script>
+</head>
+<body data-locale="en">
+  <a class="skip-link" href="#workspace">Skip to the order workspace</a>
+  <header class="topbar">
+    <div class="product-name"><span class="family-name">Gloss Tools</span><span>Order pick and packing lists</span></div>
+    <nav class="global-nav" aria-label="Language and home"><a href="https://glossquote.com/en/index.html">All tools</a><a href="../index.html" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a></nav>
+  </header>
+  <main id="workspace">
+    <div class="intro"><p class="preview-label">Local preview candidate</p><h1>Pick products together, then pack each order</h1><p>Group order lines into one SKU pick sheet, then check the items for each order as you pack.</p></div>
+    <p class="privacy-note">Data stays in this page’s memory, with no upload or automatic saving. Refreshing, changing language or leaving clears the source and checkmarks. Download before leaving.</p>
+    <nav class="workflow" aria-label="Workflow"><a href="#source">Import and columns</a><a href="#pick-heading">Pick sheet</a><a href="#orders-heading">Packing lists</a><a href="#help">Format and help</a></nav>
+    <noscript><p class="notice">JavaScript is required to process CSV in this page. Enable it and reload.</p></noscript>
+    <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true">Choose an order-lines CSV.</div>
+    <div id="progress-area" hidden><label for="progress">Processing progress</label><progress id="progress" max="100" value="0"></progress><button id="cancel" type="button">Cancel grouping</button></div>
+    <section id="errors" class="error-panel" aria-labelledby="error-heading" hidden><h2 id="error-heading" tabindex="-1">Correct the source or mapping first</h2><p id="error-summary"></p><ul id="error-details"></ul></section>
+    <details id="source" class="source-panel" open>
+      <summary><h2>Import order lines</h2><span id="source-summary">No order lines loaded. Choose a CSV or load the fake-data example.</span></summary>
+      <div class="source-body"><p>Choose one UTF-8 CSV with unique, nonempty column headers in the first record. File content is validated regardless of its extension.</p><div class="source-controls"><div class="file-field"><label for="csv-file">Order-lines CSV</label><input id="csv-file" type="file" aria-describedby="file-caps"><p id="file-caps" class="hint">Limit: 1 MiB, 5,000 data records and 30 columns. Remove unneeded address, payment and contact columns before importing.</p></div><button id="load-sample" type="button">Load fake-data example</button></div>
+      <p id="source-name" class="identifier exact-value"></p>
+      <section id="mapping-area" aria-labelledby="mapping-heading" hidden><div id="samples" class="table-region" role="region" aria-label="Horizontally scrollable source samples" tabindex="0"></div>
+        <h3 id="mapping-heading">Confirm four source columns</h3><p id="mapping-hint" class="hint">Choose a different column for each field. Only these four columns are grouped and exported. SKU and order IDs keep their exact text, including spaces and leading zeros.</p>
+        <div class="mapping-grid"><div class="field"><label for="map-orderId">Order ID</label><select id="map-orderId" aria-describedby="mapping-hint mapping-error"><option value="">Choose a source column</option></select></div><div class="field"><label for="map-sku">SKU</label><select id="map-sku" aria-describedby="mapping-hint mapping-error"><option value="">Choose a source column</option></select></div><div class="field"><label for="map-name">Product name</label><select id="map-name" aria-describedby="mapping-hint mapping-error"><option value="">Choose a source column</option></select></div><div class="field"><label for="map-quantity">Quantity</label><select id="map-quantity" aria-describedby="mapping-hint mapping-error"><option value="">Choose a source column</option></select></div></div>
+        <p id="mapping-error" class="field-error" hidden></p>
+        <button id="generate" class="primary" type="button" disabled>Generate pick and packing lists</button>
+      </section></div>
+    </details>
+    <div class="reset-row"><button id="reset" class="quiet" type="button" disabled>Clear source and checkmarks</button></div>
+    <section id="results" aria-labelledby="result-heading" hidden>
+      <div class="result-heading"><h2 id="result-heading">Pick and packing worksheet</h2><p id="result-summary"></p></div>
+      <section aria-labelledby="pick-heading"><h2 id="pick-heading" tabindex="-1">Consolidated pick sheet</h2><p class="hint">SKUs appear in first-seen order. Different SKUs with the same name stay separate. Checkmarks record page checks.</p><p id="pick-progress" class="check-progress"></p><div id="pick-sheet" class="table-region" role="region" aria-label="Horizontally scrollable consolidated SKU pick sheet" tabindex="0"></div></section>
+      <section class="packing-section" aria-labelledby="orders-heading"><h2 id="orders-heading" tabindex="-1">Per-order packing lists</h2><p class="hint">Orders and their items keep first-seen order. Check each order separately. Packing checkmarks are independent of pick-sheet checkmarks.</p><p id="packing-progress" class="check-progress"></p><div id="packing-lists"></div></section>
+      <section class="download-section" aria-labelledby="download-heading"><h2 id="download-heading">Download this worksheet</h2><p id="download-hint" class="hint">TXT and JSON include the current checkmarks with fixed filenames and an 8 MiB combined limit. TXT shows every SKU, product name and order ID as a quoted JSON string: \n means line feed, \r carriage return, \t tab, \" a quote and \\ a backslash. These escapes are reversible; JSON keeps the original text. Checkmarks do not prove that products were physically picked or packed.</p><div class="download-actions"><button id="download-txt" type="button" aria-describedby="download-hint" disabled>Download text lists (.txt)</button><button id="download-json" type="button" aria-describedby="download-hint" disabled>Download structured data (.json)</button></div></section>
+    </section>
+    <section id="help" class="help" aria-labelledby="help-heading"><h2 id="help-heading">Format and help</h2><details><summary>What blocks the entire batch?</summary><ul><li>Quantity must be an ASCII integer string from 1 to 100,000. Leading zeros are allowed; spaces, decimals, signs and thousands separators are not.</li><li>Order ID, SKU and product name must not be empty strings. Whitespace stays unchanged. Column counts must match; CSV quoting and exterior record separators must be consistent.</li><li>Each SKU must have exactly one product name. Conflicts, invalid quantities and limits stop the entire batch, with no partial lists.</li></ul></details><details><summary>Will different SKUs with the same name be merged?</summary><p>No. Only exact SKU strings are grouped. 001, 1, A, a and SKUs with spaces stay separate.</p></details><details><summary>What happens to repeated order/SKU rows?</summary><p>Their quantities are added while preserving first-seen order. Check that duplicate lines really represent additional quantities before importing.</p></details><details><summary>Does this read addresses or change inventory?</summary><p>Only the four mapped order-line fields are used; other columns are not exported. Remove unrelated personal data before importing. There is no inventory or shipping connection.</p></details><details><summary>Are checkmarks saved automatically?</summary><p>No. They exist only in this page and are cleared when the source or mapping changes. Download TXT or JSON before leaving; restoring checkmarks from an export is not supported.</p></details></section>
+  </main>
+  <footer>Gloss Tools by GlossQuote · Local order worksheets</footer>
+</body>
+</html>

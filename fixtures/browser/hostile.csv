@@ -1,0 +1,2 @@
+order,sku,name,qty
+O1,<img src=x onerror=alert(1)>,<script>alert(1)</script>,1

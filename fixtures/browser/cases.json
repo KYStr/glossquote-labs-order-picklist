@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "execution": "NOT_RUN",
+  "source": "Independent ACCEPTANCE A09/A11/A15/A18 and R01 single-line TXT contract; no product imports or product-derived expected values.",
+  "mapping": {
+    "orderId": 0,
+    "sku": 1,
+    "name": 2,
+    "quantity": 3
+  },
+  "large": {
+    "dataRecords": 5000,
+    "quantityEach": 1,
+    "expectedSkuTotal": 5000,
+    "orderCount": 1,
+    "skuCount": 1
+  },
+  "leakMarkers": [
+    "br44-browser-canary",
+    "BR44_NEW_ORDER",
+    "BR44_NEW_SKU",
+    "BR44_CANCEL_ORDER",
+    "BR44_CANCEL_SKU"
+  ],
+  "files": [
+    {
+      "path": "conflict.csv",
+      "bytes": 48,
+      "sha256": "e5c695d1cc5129b5796696980a0e677703eb9facb550bc9fecca2d6ba131089b"
+    },
+    {
+      "path": "escaped.csv",
+      "bytes": 49,
+      "sha256": "24cffcda3aea9a52fc8d8d7036e9b1d03b5b267fd659220839cb27bb78cadc97"
+    },
+    {
+      "path": "expected/escaped.json",
+      "bytes": 505,
+      "sha256": "8833763415e64943146e25cc35f25f601a698ee25104181ac94452c666b3722c"
+    },
+    {
+      "path": "expected/escaped.txt",
+      "bytes": 437,
+      "sha256": "cb869328f4ed226207fae322b8db6c8a94f971354bed3f8e64565291f4f268cc"
+    },
+    {
+      "path": "expected/hostile.json",
+      "bytes": 565,
+      "sha256": "23afd82986cd2358f879ccf87a3dfba65245343412189105b84f28da16a829e3"
+    },
+    {
+      "path": "expected/hostile.txt",
+      "bytes": 497,
+      "sha256": "5ceb4251553c12ceafbd14f460ade181cf89c45baeb8be0d2741ed6ead37ec04"
+    },
+    {
+      "path": "expected/identity.json",
+      "bytes": 770,
+      "sha256": "3d6ef7ff9d33d9178fa9ddf816ef4ad9fee4f9bdd7eac38450a77116866b429b"
+    },
+    {
+      "path": "expected/replacement.json",
+      "bytes": 513,
+      "sha256": "0a655547d2e4508dce737afcdbf3d65344c3ebee0a8e959f33cacf289e92125e"
+    },
+    {
+      "path": "expected/success-checked.json",
+      "bytes": 885,
+      "sha256": "4a587b787b7797e709e02d69d862109f74b954ca8db0510f871dc518387b2fc5"
+    },
+    {
+      "path": "expected/success-checked.txt",
+      "bytes": 568,
+      "sha256": "725a3b11d2c26f823b61948ad529640105aa671d808b5067f0411c560ee5ff09"
+    },
+    {
+      "path": "expected/success-unchecked.json",
+      "bytes": 886,
+      "sha256": "be2d8f4d90a3e1c3a2e1e913c9c02e48b3a7ba63f6f1a332d9cd3ae5127f92a9"
+    },
+    {
+      "path": "expected/success-unchecked.txt",
+      "bytes": 568,
+      "sha256": "a2e7a92315132983ab7eb6f887e13280f3cc7046e18b02193eedc109bd738f56"
+    },
+    {
+      "path": "header-only.csv",
+      "bytes": 19,
+      "sha256": "d25770f46299dfb1ff1e1f1dddc7f3a874289d8dab925c560a3fd0ca17892a13"
+    },
+    {
+      "path": "hostile.csv",
+      "bytes": 78,
+      "sha256": "b703ff8e8e2d62e6540dd2d9b608ce7c40cc22ecd90d0de378d743fcd4ddc9b7"
+    },
+    {
+      "path": "identity.csv",
+      "bytes": 44,
+      "sha256": "3252c6a31afb830449821ec750db1d8a26f07c4ae5d25c3b1a0cef71663fc7bd"
+    },
+    {
+      "path": "large.csv",
+      "bytes": 230018,
+      "sha256": "f0d545e73acddf42126fbfbb827855a9c3cd05ce40d40306eb928c7f8e315097"
+    },
+    {
+      "path": "malformed.csv",
+      "bytes": 33,
+      "sha256": "982a0f6470f740a4f2e052b5f6663db81ff3d608a335f723e7ce0ca4c54c8af8"
+    },
+    {
+      "path": "quantity.csv",
+      "bytes": 32,
+      "sha256": "8d53122979b246c9870be189167989b9ecbaa2f2dfc1f64d10e9eef698c6e5a1"
+    },
+    {
+      "path": "replacement.csv",
+      "bytes": 59,
+      "sha256": "d6bcdbf2b93e3a8d223045725d6d92664a51846a67a9cad0f7f958ce0c18e0a0"
+    },
+    {
+      "path": "success.csv",
+      "bytes": 54,
+      "sha256": "53bd2bf1c9cfd79357e5f72da909cf02c42aabc685e844adc655790b0a2fcbac"
+    }
+  ]
+}

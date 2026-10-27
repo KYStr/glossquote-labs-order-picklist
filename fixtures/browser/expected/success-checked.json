@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "tool": "order-picklist",
+  "totals": [
+    {
+      "sku": "A",
+      "name": "筆",
+      "quantity": 5,
+      "orderCount": 2,
+      "checked": true
+    },
+    {
+      "sku": "B",
+      "name": "紙",
+      "quantity": 1,
+      "orderCount": 1,
+      "checked": false
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "O1",
+      "items": [
+        {
+          "sku": "A",
+          "name": "筆",
+          "quantity": 2,
+          "checked": false
+        },
+        {
+          "sku": "B",
+          "name": "紙",
+          "quantity": 1,
+          "checked": false
+        }
+      ]
+    },
+    {
+      "orderId": "O2",
+      "items": [
+        {
+          "sku": "A",
+          "name": "筆",
+          "quantity": 3,
+          "checked": false
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sourceRows": 3,
+    "skuCount": 2,
+    "orderCount": 2
+  }
+}

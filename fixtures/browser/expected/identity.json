@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "tool": "order-picklist",
+  "totals": [
+    {
+      "sku": "001",
+      "name": "筆",
+      "quantity": 2,
+      "orderCount": 1,
+      "checked": false
+    },
+    {
+      "sku": "1",
+      "name": "筆",
+      "quantity": 3,
+      "orderCount": 1,
+      "checked": false
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "001",
+      "items": [
+        {
+          "sku": "001",
+          "name": "筆",
+          "quantity": 2,
+          "checked": false
+        }
+      ]
+    },
+    {
+      "orderId": "1",
+      "items": [
+        {
+          "sku": "1",
+          "name": "筆",
+          "quantity": 3,
+          "checked": false
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sourceRows": 2,
+    "skuCount": 2,
+    "orderCount": 2
+  }
+}

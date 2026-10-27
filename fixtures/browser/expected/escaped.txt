@@ -1,0 +1,16 @@
+Order pick list and packing lists
+Checkmarks are page records, not proof of physical picking or packing.
+Text fields use JSON string quoting: \n = LF, \r = CR, \t = tab; \" = quote, \\ = backslash.
+Source rows: 1 | SKUs: 1 | Orders: 1
+
+Total pick sheet
+[ ] SKU: "A\t\"\\"
+    Product: "Pen\r\n\t\"\\"
+    Quantity: 1 | Orders: 1
+
+Per-order packing lists
+
+Order: "O1\n\"\\"
+[ ] SKU: "A\t\"\\"
+    Product: "Pen\r\n\t\"\\"
+    Quantity: 1

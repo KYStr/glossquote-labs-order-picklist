@@ -1,0 +1,27 @@
+Order pick list and packing lists
+Checkmarks are page records, not proof of physical picking or packing.
+Text fields use JSON string quoting: \n = LF, \r = CR, \t = tab; \" = quote, \\ = backslash.
+Source rows: 3 | SKUs: 2 | Orders: 2
+
+Total pick sheet
+[ ] SKU: "A"
+    Product: "筆"
+    Quantity: 5 | Orders: 2
+[ ] SKU: "B"
+    Product: "紙"
+    Quantity: 1 | Orders: 1
+
+Per-order packing lists
+
+Order: "O1"
+[ ] SKU: "A"
+    Product: "筆"
+    Quantity: 2
+[ ] SKU: "B"
+    Product: "紙"
+    Quantity: 1
+
+Order: "O2"
+[ ] SKU: "A"
+    Product: "筆"
+    Quantity: 3

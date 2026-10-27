@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "status": "PRIMARY_CORE_ACCEPTED_MANUAL_GATES_RETAINED",
+  "runs": [
+    {
+      "id": "b20-44-r1",
+      "resultSha256": "003ff93c253b787d1a0a2eac074dd6d90b5b735433543e291ac3cefa668d2792",
+      "browserVersion": "145.0.7632.6",
+      "statuses": {
+        "PASS": 30,
+        "NOT_RUN": 10
+      },
+      "failures": 0,
+      "prohibited": 0
+    },
+    {
+      "id": "b20-44-lifecycle2-r1",
+      "resultSha256": "65952d3b5f0887de9bd0b468194b0f093fba7152a1827b213d711a54f16ec94f",
+      "browserVersion": "145.0.7632.6",
+      "statuses": {
+        "PASS": 2
+      },
+      "failures": 0,
+      "prohibited": 0
+    }
+  ],
+  "remainingNotRun": 10,
+  "remainingScopes": [
+    "exact source-replacement event edge",
+    "true 200% zoom",
+    "native chooser/save/print",
+    "real devices and assistive technology",
+    "exact combined 8MiB browser output boundary"
+  ],
+  "ownerDidNotRerunBrowser": true,
+  "sourcePublishedSeparatelyFromHosting": true,
+  "liveHosting": "NOT_DEPLOYED",
+  "externalReview": "PENDING"
+}

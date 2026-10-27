@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "tool": "order-picklist",
+  "totals": [
+    {
+      "sku": "<img src=x onerror=alert(1)>",
+      "name": "<script>alert(1)</script>",
+      "quantity": 1,
+      "orderCount": 1,
+      "checked": false
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "O1",
+      "items": [
+        {
+          "sku": "<img src=x onerror=alert(1)>",
+          "name": "<script>alert(1)</script>",
+          "quantity": 1,
+          "checked": false
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sourceRows": 1,
+    "skuCount": 1,
+    "orderCount": 1
+  }
+}
