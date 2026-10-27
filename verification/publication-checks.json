@@ -1,34 +1,56 @@
 {
   "schemaVersion": 1,
+  "task": "B20-44-M2B-R03",
   "status": "PASS",
-  "scope": "Standalone publication copy offline closure and deterministic release reproduction",
+  "scope": "Five actual offline commands in standalone publication copy; no install/browser/server",
+  "platform": "win32",
+  "node": "v24.14.0",
   "commands": [
     {
-      "command": "node --test test/release.test.mjs",
+      "command": "npm test",
+      "cwd": "publishing-copy",
+      "exitCode": 0,
+      "tests": 73,
+      "pass": 73,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "command": "npm run check",
+      "cwd": "publishing-copy",
       "exitCode": 0
     },
     {
-      "command": "node scripts/check.mjs",
+      "command": "npm run build",
+      "cwd": "publishing-copy",
       "exitCode": 0
     },
     {
-      "command": "node scripts/release.mjs build",
+      "command": "npm run build:release",
+      "cwd": "publishing-copy",
       "exitCode": 0
     },
     {
-      "command": "node scripts/release.mjs check",
+      "command": "npm run check:release",
+      "cwd": "publishing-copy",
       "exitCode": 0
     }
   ],
-  "releaseTests": 21,
-  "releasePassed": 21,
-  "unchangedProductCoreTests": "REUSED_BY_BYTE_IDENTITY_AND_PRIMARY_EVIDENCE",
-  "browserRunByThisPhase": false,
-  "sourceSetSha256": "9f1f1f454e44dac3e00d0ed1be9e8093c84027add7acc9ff4d176636cd643749",
-  "releaseArtifactSha256": "269e622f3ff4184b226b5a1605c9d5e9e833ef10e4e79bfe38a411c9e88d7bba",
-  "rebuiltReleaseManifestMatchesFixedBytes": true,
-  "previewNoindexPreserved": true,
-  "githubSourcePublicationIsSeparateFromDeployment": true,
+  "releaseTests": 24,
+  "fullSuiteTests": 73,
+  "passed": 73,
+  "failed": 0,
+  "sourceSetSha256": "e9f2311c60c9c0ccb154d51b5b7fd1ea5f2b52fd3b06606d571d170e294b9ed5",
+  "releaseArtifactSha256": "18d0b11120e5ab361c15f7a21ef37389f6d52619bb4390edf6fd2dc229aca210",
+  "releaseManifestSha256": "a89639a1e1129b5f60cf638ed22aa3851b650c0a830a5ed30a973278e65f44e4",
+  "rebuiltAll16ArtifactFilesByteIdentical": true,
+  "previewDistMatchesAll13PublicFiles": true,
+  "testFilesComplete": true,
+  "posixIntegratedTests": "NOT_RUN_LOCAL_PLATFORM",
+  "browserRerun": false,
+  "remainingBrowserNotRun": 10,
+  "liveHttpRedirect": "NOT_RUN_NOT_DEPLOYED",
   "hosting": "NOT_DEPLOYED",
   "externalReview": "PENDING"
 }

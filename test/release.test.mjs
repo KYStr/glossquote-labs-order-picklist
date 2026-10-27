@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdir, mkdtemp, copyFile, readFile, writeFile, readdir, lstat, unlink, symlink, rmdir } from 'node:fs/promises';
+import { mkdir, mkdtemp, copyFile, readFile, writeFile, readdir, lstat, unlink, symlink, rmdir, realpath } from 'node:fs/promises';
 import { join, dirname, resolve, relative, basename } from 'node:path';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
@@ -9,6 +9,7 @@ import { runRelease, expectedRelease, SOURCE_PINS, SITE_PATHS, parseMode } from 
 import { ORIGIN, TOOL_SLUG, splitHead, releaseBody, inspectReleaseHtml } from '../scripts/release-html.mjs';
 
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const ENTRY_REDIRECTS = '/ /index.html 301\n/en /en/index.html 301\n/en/ /en/index.html 301\n';
 const fixtureBase = join(ROOT, 'evidence', 'm2a', 'fixtures');
 async function fixture() {
   await mkdir(fixtureBase, { recursive: true });
@@ -46,11 +47,22 @@ function ownTarget(root, path) {
   return absolute;
 }
 
+async function removeOwnedDirectoryLink(root, path, targetPath) {
+  const link = ownTarget(root, path); const target = ownTarget(root, targetPath);
+  assert.ok((await lstat(link)).isSymbolicLink(), 'Cleanup target must remain a link.');
+  const targetStat = await lstat(target);
+  assert.ok(targetStat.isDirectory() && !targetStat.isSymbolicLink(), 'Owned target must remain a real directory.');
+  assert.equal(await realpath(link), await realpath(target), 'Cleanup link must point to the expected owned target.');
+  // Remove only this test-owned link; never recurse into its target.
+  if (process.platform === 'win32') await rmdir(link);
+  else await unlink(link);
+}
+
 test('release constants, pinned sources and deduplicated site routes are fixed', async () => {
   assert.equal(ORIGIN, 'https://picklist.glossquote.com'); assert.equal(TOOL_SLUG, 'order-picklist');
   const expected = await expectedRelease();
   assert.deepEqual(SOURCE_PINS.map(pin => pin.path), [...ASSETS].sort());
-  assert.equal(SOURCE_PINS.length, 13); assert.equal(SITE_PATHS.length, 14);
+  assert.equal(SOURCE_PINS.length, 13); assert.equal(SITE_PATHS.length, 15);
   assert.deepEqual(Object.keys(expected.manifest), ['schemaVersion', 'mode', 'origin', 'toolSlug', 'files', 'sourceFiles']);
   assert.equal(expected.manifest.schemaVersion, 1); assert.equal(expected.manifest.mode, 'release-candidate');
   assert.deepEqual(expected.manifest.files.map(file => file.path), [...new Set(expected.manifest.files.map(file => file.path))].sort());
@@ -157,6 +169,41 @@ test('robots, two-URL sitemap and privacy/security headers are exact release con
   assert.match(headers, /connect-src 'none'/); assert.match(headers, /script-src 'self'/); assert.match(headers, /Referrer-Policy: no-referrer/);
 });
 
+test('release entry redirects are exactly three LF rules covered by the closed manifest', async () => {
+  const root = await builtFixture();
+  const bytes = await readFile(join(root, 'release-artifacts/site/_redirects'));
+  assert.deepEqual(bytes, Buffer.from(ENTRY_REDIRECTS));
+  assert.deepEqual(bytes.toString('utf8').split('\n'), [
+    '/ /index.html 301', '/en /en/index.html 301', '/en/ /en/index.html 301', '',
+  ]);
+  const manifest = JSON.parse(await readFile(join(root, 'release-artifacts/manifest.json'), 'utf8'));
+  assert.deepEqual(manifest.files.filter(file => file.path === '_redirects'), [
+    { path: '_redirects', bytes: bytes.length, sha256: hash(bytes) },
+  ]);
+  assert.equal(SITE_PATHS.filter(path => path === '_redirects').length, 1);
+});
+
+test('missing or altered entry redirects fail check and build even with a matched tampered manifest', async () => {
+  const cases = [
+    ['missing', null, false, /MISSING_FILE/],
+    ['bytes-only', ENTRY_REDIRECTS.replace('301', '302'), false, /OUTPUT_MISMATCH/],
+    ['paired-status', ENTRY_REDIRECTS.replaceAll('301', '302'), true, /MANIFEST_MISMATCH/],
+    ['paired-target', ENTRY_REDIRECTS.replace('/en/ /en/index.html', '/en/ /index.html'), true, /MANIFEST_MISMATCH/],
+    ['paired-literal-newlines', ENTRY_REDIRECTS.replaceAll('\n', '\\n'), true, /MANIFEST_MISMATCH/],
+    ['paired-crlf', ENTRY_REDIRECTS.replaceAll('\n', '\r\n'), true, /MANIFEST_MISMATCH/],
+    ['paired-extra', ENTRY_REDIRECTS + '/extra /index.html 301\n', true, /MANIFEST_MISMATCH/],
+  ];
+  for (const [name, value, paired, error] of cases) {
+    const root = await builtFixture(); const file = ownTarget(root, 'release-artifacts/site/_redirects');
+    if (value === null) await unlink(file);
+    else if (paired) await setAssetAndManifest(root, '_redirects', value);
+    else await writeFile(file, value);
+    const before = await inventory(join(root, 'release-artifacts'));
+    for (const mode of ['check', 'build']) await assert.rejects(runRelease(mode, { root }), error, name + ' ' + mode);
+    assert.deepEqual(await inventory(join(root, 'release-artifacts')), before, name);
+  }
+});
+
 test('legal rebuild is byte deterministic and reuses verified managed output', async () => {
   const root = await builtFixture(); const before = await inventory(join(root, 'release-artifacts'));
   const result = await runRelease('build', { root }); assert.equal(result.reused, true);
@@ -250,16 +297,52 @@ test('missing, extra and unknown-directory source fails preflight before creatin
 
 test('source and output junctions are rejected without traversing or writing targets', async () => {
   const source = await fixture();
+  const sourceTarget = ownTarget(source, 'public/js');
+  const sourceBefore = await inventory(sourceTarget);
+  const sourceSentinel = await readFile(join(sourceTarget, 'app.js'));
   const sourceLink = ownTarget(source, 'public/unknown-junction');
-  await symlink(join(source, 'public/js'), sourceLink, 'junction');
+  await symlink(sourceTarget, sourceLink, 'junction');
   try { await assert.rejects(runRelease('build', { root: source }), /SYMLINK_OR_JUNCTION_REJECTED/); }
-  finally { await rmdir(sourceLink); } // Remove only this test-owned link, never recurse.
-  const output = await fixture(); const target = ownTarget(output, 'owned-target'); await mkdir(target);
-  const outputLink = ownTarget(output, 'release-artifacts');
-  await symlink(target, outputLink, 'junction');
-  try { await assert.rejects(runRelease('build', { root: output }), /DIRECTORY_OR_LINK_INVALID/); }
-  finally { await rmdir(outputLink); }
-  assert.deepEqual(await readdir(target), []);
+  finally { await removeOwnedDirectoryLink(source, 'public/unknown-junction', 'public/js'); }
+  await assert.rejects(lstat(sourceLink), { code: 'ENOENT' });
+  assert.deepEqual(await inventory(sourceTarget), sourceBefore);
+  assert.deepEqual(await readFile(join(sourceTarget, 'app.js')), sourceSentinel);
+  for (const occupied of [false, true]) {
+    const output = await fixture(); const target = ownTarget(output, 'owned-target'); await mkdir(target);
+    const sentinel = Buffer.from('FAKE_OUTPUT_TARGET_KEEP\n');
+    if (occupied) await writeFile(join(target, 'keep.txt'), sentinel);
+    const before = await inventory(target);
+    const outputLink = ownTarget(output, 'release-artifacts');
+    await symlink(target, outputLink, 'junction');
+    try { await assert.rejects(runRelease('build', { root: output }), /DIRECTORY_OR_LINK_INVALID/); }
+    finally { await removeOwnedDirectoryLink(output, 'release-artifacts', 'owned-target'); }
+    await assert.rejects(lstat(outputLink), { code: 'ENOENT' });
+    assert.deepEqual(await inventory(target), before);
+    if (occupied) assert.deepEqual(await readFile(join(target, 'keep.txt')), sentinel);
+  }
+});
+
+test('owned directory-link cleanup refuses non-links, escaped paths and mismatched targets', async () => {
+  const root = await fixture();
+  for (const name of ['owned-target', 'other-target']) {
+    await mkdir(ownTarget(root, name));
+    await writeFile(join(root, name, 'keep.txt'), 'FAKE_' + name + '_KEEP\n');
+  }
+  await writeFile(ownTarget(root, 'owned-file.txt'), 'FAKE_FILE_KEEP\n');
+  const before = await inventory(root);
+  await assert.rejects(removeOwnedDirectoryLink(root, 'owned-target', 'other-target'), /Cleanup target must remain a link/);
+  await assert.rejects(removeOwnedDirectoryLink(root, 'owned-file.txt', 'owned-target'), /Cleanup target must remain a link/);
+  await assert.rejects(removeOwnedDirectoryLink(root, '../unowned-link', 'owned-target'), { name: 'AssertionError' });
+  assert.deepEqual(await inventory(root), before);
+  const link = ownTarget(root, 'owned-link');
+  await symlink(ownTarget(root, 'owned-target'), link, 'junction');
+  try {
+    const linked = await inventory(root);
+    await assert.rejects(removeOwnedDirectoryLink(root, 'owned-link', 'other-target'), /expected owned target/);
+    assert.deepEqual(await inventory(root), linked);
+  } finally { await removeOwnedDirectoryLink(root, 'owned-link', 'owned-target'); }
+  await assert.rejects(lstat(link), { code: 'ENOENT' });
+  assert.deepEqual(await inventory(root), before);
 });
 
 test('unmanaged empty or occupied output root is never adopted or overwritten', async () => {

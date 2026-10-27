@@ -22,7 +22,7 @@ export const SOURCE_PINS = Object.freeze([
   ['styles/app.css', 10421, 'd22203d2191dd658916accca60ed3e40cf4e53a10134e74e4c16640d15d4fbe9'],
 ].map(([path, bytes, sha256]) => Object.freeze({ path, bytes, sha256 })));
 
-export const SITE_PATHS = Object.freeze([...new Set([...ASSETS, 'robots.txt', '_headers', 'sitemap.xml'])].sort());
+export const SITE_PATHS = Object.freeze([...new Set([...ASSETS, 'robots.txt', '_headers', '_redirects', 'sitemap.xml'])].sort());
 const OUTPUT_PATHS = ['manifest.json', ...SITE_PATHS.map(path => `site/${path}`)].sort();
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const utf8 = text => Buffer.from(text, 'utf8');
@@ -124,6 +124,7 @@ export async function expectedRelease(root = ROOT) {
   requireValue(matches.length === 1, 'SOURCE_HEADERS_INVALID');
   site.set('_headers', utf8(headers.replace(matches[0][0], matches[0][1] + 'index, follow' + matches[0][2])));
   site.set('robots.txt', utf8(`User-agent: *\nAllow: /\nSitemap: ${ORIGIN}/sitemap.xml\n`));
+  site.set('_redirects', utf8('/ /index.html 301\n/en /en/index.html 301\n/en/ /en/index.html 301\n'));
   site.set('sitemap.xml', utf8(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${URLS.zh}</loc></url>\n  <url><loc>${URLS.en}</loc></url>\n</urlset>\n`));
   const files = SITE_PATHS.map(path => ({ path, bytes: site.get(path).length, sha256: sha(site.get(path)) }));
   const manifest = { schemaVersion: 1, mode: 'release-candidate', origin: ORIGIN, toolSlug: TOOL_SLUG, files, sourceFiles: SOURCE_PINS.map(entry => ({ ...entry })) };

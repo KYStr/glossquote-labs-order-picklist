@@ -2,8 +2,8 @@
   "algorithm": "SHA-256",
   "aggregateFormat": "UTF-8 sorted path + NUL + byte length + NUL + hex SHA-256 + LF",
   "fileCount": 52,
-  "totalBytes": 276832,
-  "aggregateSha256": "9f1f1f454e44dac3e00d0ed1be9e8093c84027add7acc9ff4d176636cd643749",
+  "totalBytes": 297890,
+  "aggregateSha256": "e9f2311c60c9c0ccb154d51b5b7fd1ea5f2b52fd3b06606d571d170e294b9ed5",
   "files": [
     {
       "path": ".gitignore",
@@ -22,8 +22,8 @@
     },
     {
       "path": "HANDOFF.md",
-      "bytes": 22350,
-      "sha256": "d031a8a6ce23ea114d7ba2d6bc6eeb6afc20bd65507e121a853281eff7999f89"
+      "bytes": 35357,
+      "sha256": "009f07f36a93cbeb92303ce24bf79646cc4373fdecb07038d15d6740d9184873"
     },
     {
       "path": "M1B-RELEASE.md",
@@ -52,8 +52,8 @@
     },
     {
       "path": "TASK-ENTRY.md",
-      "bytes": 5002,
-      "sha256": "89f049a14c61ef148e986f4dc60f9bf3dd8d2d46d9ae1491a35122b876e17cad"
+      "bytes": 7820,
+      "sha256": "0fb15efdf67612796ace10658a249979e39ccd5fd48358c8fac5b458d10355f1"
     },
     {
       "path": "TASKS.md",
@@ -212,8 +212,8 @@
     },
     {
       "path": "scripts/release.mjs",
-      "bytes": 10210,
-      "sha256": "b695f548510588eda269024ade6e6fa6bdbf38b1f670353ff80f43fd9a59d052"
+      "bytes": 10328,
+      "sha256": "12f353860ed9314f38ad5008cffdee278a8aafbef99b962f6b67aca5d3f5d3ab"
     },
     {
       "path": "scripts/serve.mjs",
@@ -247,8 +247,8 @@
     },
     {
       "path": "test/release.test.mjs",
-      "bytes": 19625,
-      "sha256": "a29c8ab3d5bc6fd465153abe69a7f46064999191b9225fb7def36049fc601033"
+      "bytes": 24740,
+      "sha256": "60f449b49a0938410b3ef4ce57e00e748caf2587b52f092633dc1955d4767590"
     },
     {
       "path": "test/session.test.mjs",
